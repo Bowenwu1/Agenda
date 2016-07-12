@@ -148,3 +148,47 @@ std::string Date::dateToString(Date date) {
     return ss.str(); 
 }
 
+
+Date& Date::operator=(const Date& date) {
+    year_ = date.getYear();
+    month_ = date.getMonth();
+    day_ = date.getDay();
+    hour_ = date.getHour();
+    minute_ = date.getMinute();
+    return *this;   
+}
+
+bool Date::operator==(const Date& date) const {
+    return (year_ == date.getYear()&&
+    month_ == date.getMonth()&&
+    day_ == date.getDay()&&
+    hour_ == date.getHour()&&
+    minute_ == date.getMinute());
+}
+
+bool Date::operator>(const Date& date) const {
+    if (year_ > date.getYear()) return true;
+    else if (year_ < date.getYear()) return false;
+    if (month_ > date.getMonth()) return true;
+    else if (month_ < date.getMonth()) return false;
+    if (day_ > date.getDay()) return true;
+    else if (day_ < date.getDay()) return false;
+    if (hour_ > date.getHour()) return true;
+    else if (hour_ < date.getHour()) return false;
+    if (minute_ > date.getMinute()) return true;
+    else if (minute_ < date.getMinute()) return false;
+    return false;
+}
+
+bool Date::operator<(const Date& date) const {
+    return (!*this == date && !*this > date);
+}
+
+bool Date::operator>=(const Date& date) const {
+    return (*this == date || *this > date);
+}
+
+bool Date::operator<=(const Date& date) const {
+    return (*this == date || *this < date);
+}
+
