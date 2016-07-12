@@ -74,7 +74,8 @@ bool Date::isValid(Date date) {
     }
 
     // check hour and minute_
-    if (hour_ < 0 || hour_ > 23 || minute_ < 0 || minute_ > 59)
+    if (date.hour_ < 0 || date.hour_ > 23
+    || date.minute_ < 0 || date.minute_ > 59)
         return false;
     return true;
 }
@@ -86,19 +87,19 @@ Date Date::stringToDate(std::string dateString) {
     std::size_t str = 0, end = 0;
     int temp;
     stringstream ss;
-    for (std::size_t i = 0; i < dateString.lenth(); i++) {
+    for (std::size_t i = 0; i < dateString.length(); i++) {
         if (dateString[i] == '-') {
             end = i;
             break;
         }
     }
     ss.str(dateString.substr(str, end - str));
-    ss.str >> temp;
+    ss >> temp;
     ss.clear();
     result.setYear(temp);
     str = end + 1;
     // finish set Year
-    for (std::size_t i = str; i < dateString.lenth(); i++) {
+    for (std::size_t i = str; i < dateString.length(); i++) {
         if (dateString[i] == '-') {
             end = i;
             break;
@@ -110,7 +111,7 @@ Date Date::stringToDate(std::string dateString) {
     result.setMonth(temp);
     str = end + 1;
     // finish set Month
-    for (std::size_t i = str; i < dateString.lenth(); i++) {
+    for (std::size_t i = str; i < dateString.length(); i++) {
         if (dateString[i] == '/') {
             end = i;
             break;
@@ -122,7 +123,7 @@ Date Date::stringToDate(std::string dateString) {
     result.setDay(temp);
     str = end + 1;
     // finish set Day
-    for (std::size_t i = str; i < dateString.lenth(); i++) {
+    for (std::size_t i = str; i < dateString.length(); i++) {
         if (dateString[i] == ':') {
             end = i;
             break;
@@ -181,7 +182,7 @@ bool Date::operator>(const Date& date) const {
 }
 
 bool Date::operator<(const Date& date) const {
-    return (!*this == date && !*this > date);
+    return (!(*this == date) && !(*this > date));
 }
 
 bool Date::operator>=(const Date& date) const {
