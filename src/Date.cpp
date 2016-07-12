@@ -1,4 +1,6 @@
 #include "Date.h"
+#include <sstream>
+using std::stringstream;
 
 // Default constructor
 Date::Date() {
@@ -76,3 +78,73 @@ bool Date::isValid(Date date) {
         return false;
     return true;
 }
+// transfer between string and date
+Date Date::stringToDate(std::string dateString) {
+    // check whether this string is valid
+    //
+    Date result;
+    std::size_t str = 0, end = 0;
+    int temp;
+    stringstream ss;
+    for (std::size_t i = 0; i < dateString.lenth(); i++) {
+        if (dateString[i] == '-') {
+            end = i;
+            break;
+        }
+    }
+    ss.str(dateString.substr(str, end - str));
+    ss.str >> temp;
+    ss.clear();
+    result.setYear(temp);
+    str = end + 1;
+    // finish set Year
+    for (std::size_t i = str; i < dateString.lenth(); i++) {
+        if (dateString[i] == '-') {
+            end = i;
+            break;
+        }
+    }
+    ss.str(dateString.substr(str, end - str));
+    ss >> temp;
+    ss.clear();
+    result.setMonth(temp);
+    str = end + 1;
+    // finish set Month
+    for (std::size_t i = str; i < dateString.lenth(); i++) {
+        if (dateString[i] == '/') {
+            end = i;
+            break;
+        }
+    }
+    ss.str(dateString.substr(str, end - str));
+    ss >> temp;
+    ss.clear();
+    result.setDay(temp);
+    str = end + 1;
+    // finish set Day
+    for (std::size_t i = str; i < dateString.lenth(); i++) {
+        if (dateString[i] == ':') {
+            end = i;
+            break;
+        }
+    }
+    ss.str(dateString.substr(str, end - str));
+    ss >> temp;
+    ss.clear();
+    result.setHour(temp);
+    str = end + 1;
+    // finish set Hour
+    ss.str(dateString.substr(str));
+    ss >> temp;
+    // finish set Minute
+    return result;
+}
+
+std::string Date::dateToString(Date date) {
+    stringstream ss;
+    ss << date.getYear() << '-' << date.getMonth()
+       << '-' << date.getDay() << '/' << date.getHour()
+       << ':' << date.getMinute();
+    return ss.str(); 
+}
+
